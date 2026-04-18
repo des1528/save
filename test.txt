@@ -1,1 +1,15 @@
-123
+(.venv) PS C:\Users\students\PycharmProjects\pythonProject2\lab_app> python app.py
+Traceback (most recent call last):
+  File "C:\Users\students\PycharmProjects\pythonProject2\lab_app\app.py", line 91, in <module>
+    root = tk.Tk()
+  File "C:\Program Files\Python313\Lib\tkinter\__init__.py", line 2459, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_tkinter.TclError: Can't find a usable init.tcl in the following directories:
+    {C:/Program Files/Python313/lib/tcl8.6} C:/Users/students/PycharmProjects/pythonProject2/.venv/lib/tcl8.6 C:/Users/students/PycharmProjects/pytho
+nProject2/lib/tcl8.6 C:/Users/students/PycharmProjects/pythonProject2/.venv/library C:/Users/students/PycharmProjects/pythonProject2/library C:/Users
+/students/PycharmProjects/pythonProject2/tcl8.6.14/library C:/Users/students/PycharmProjects/tcl8.6.14/library
+
+
+
+This probably means that Tcl wasn't installed properly.
