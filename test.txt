@@ -1,0 +1,65 @@
+(.venv) PS C:\Users\students\PycharmProjects\pythonProject2\lab_app> python app.py
+Traceback (most recent call last):
+  File "C:\Users\students\PycharmProjects\pythonProject2\lab_app\app.py", line 91, in <module>
+    root = tk.Tk()
+  File "C:\Program Files\Python313\Lib\tkinter\__init__.py", line 2459, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_tkinter.TclError: Can't find a usable init.tcl in the following directories:
+    {C:/Program Files/Python313/lib/tcl8.6} C:/Users/students/PycharmProjects/pythonProject2/.venv/lib/tcl8.6 C:/Users/students/PycharmProjects/pytho
+nProject2/lib/tcl8.6 C:/Users/students/PycharmProjects/pythonProject2/.venv/library C:/Users/students/PycharmProjects/pythonProject2/library C:/Users
+/students/PycharmProjects/pythonProject2/tcl8.6.14/library C:/Users/students/PycharmProjects/tcl8.6.14/library
+
+
+
+This probably means that Tcl wasn't installed properly.
+
+==========================================================
+РЕШЕНИЕ
+==========================================================
+
+Ошибка: Python в venv не видит Tcl/Tk (файл init.tcl), поэтому
+tkinter не запускается. Типичная проблема Python 3.13 на Windows,
+когда venv создан на машине, где tcl/tk-файлы лежат не там, где
+их ищет Python.
+
+СПОСОБ 1 (быстрый, без переустановки Python).
+Выставить переменные окружения перед запуском. В PowerShell:
+
+    $env:TCL_LIBRARY = "C:\Program Files\Python313\tcl\tcl8.6"
+    $env:TK_LIBRARY  = "C:\Program Files\Python313\tcl\tk8.6"
+    python app.py
+
+Проверь, что эти папки реально существуют. Если нет — зайди в
+C:\Program Files\Python313\tcl\ и посмотри, какие именно папки там
+лежат (может быть tcl8.6.14 / tk8.6.14) — подставь их.
+
+Чтобы не прописывать каждый раз, добавь переменные постоянно:
+Система -> Дополнительные параметры системы -> Переменные среды.
+
+СПОСОБ 2 (правильный). Переустановить Python с tkinter.
+1) Панель управления -> "Python 3.13" -> Uninstall.
+2) Скачать установщик с python.org.
+3) При установке обязательно отметить:
+   [x] tcl/tk and IDLE
+   [x] Add python.exe to PATH
+4) Пересоздать venv:
+       rm -r .venv
+       python -m venv .venv
+       .venv\Scripts\activate
+       pip install -r requirements.txt
+5) Запустить:
+       python app.py
+
+СПОСОБ 3 (если переустановка не помогает).
+Скопировать папки tcl8.6 и tk8.6 из
+   C:\Program Files\Python313\tcl\
+в
+   C:\Users\students\PycharmProjects\pythonProject2\.venv\lib\
+(создать папку lib, если её нет).
+
+БЫСТРАЯ ПРОВЕРКА, что tkinter вообще работает:
+    python -m tkinter
+Должно открыться тестовое окно "This is Tcl/Tk version 8.6...".
+Если и эта команда падает с тем же init.tcl — проблема в самой
+установке Python, используй СПОСОБ 2.
